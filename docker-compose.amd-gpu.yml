@@ -1,0 +1,20 @@
+version: '3.6'
+services:
+
+  radeon-open-compute:
+    image: rocm/pytorch:rocm3.8_ubuntu18.04_py3.6_pytorch
+    container_name: pytorch-amd-roc
+    volumes:
+      - './data:/data'
+    devices:
+      - /dev/kfd
+      - /dev/dri
+    group_add:
+      - video
+    privileged: true
+
+    # Active shell
+    stdin_open: true
+    tty: true
+
+    # sudo docker run -it -v $(pwd)/data:/data --privileged --rm --device=/dev/kfd --device=/dev/dri --group-add video rocm/pytorch:rocm3.8_ubuntu18.04_py3.6_pytorch

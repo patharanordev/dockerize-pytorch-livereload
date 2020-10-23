@@ -1,0 +1,19 @@
+version: '3.6'
+services:
+
+  pytorch:
+    container_name: pytorch-mac
+    build:
+      context: ./mac
+      dockerfile: mac.Dockerfile
+    ipc: host
+
+    # gunicorn service
+    ports:
+      - 8000:8000
+    volumes:
+      - ./mac:/app
+
+    # # Active shell
+    # stdin_open: true
+    # tty: true
