@@ -34,7 +34,17 @@ tensor([[0.9933, 0.1517, 0.5074],
         [0.2791, 0.0870, 0.4692]])
 ```
 
-Now you are ready to develop ML in `./mac/`. 
+Now you are ready to develop ML in `./mac/ml` or  `./mac/tests` upon your define in `./mac/server.py` :
+
+```python
+import falcon
+
+# directory name
+import tests
+import ml
+
+# ...
+```
 
 **Note** : I'm not support **RadeonOpenComputing(ROCm)** for now, you can learn more detail from https://github.com/RadeonOpenCompute.
 
@@ -58,6 +68,8 @@ pytorch
 |- mac
 |  |- tests
 |  |  `- YOUR_TEST_FILE.py
+|  |- ml
+|  |  `- YOUR_ML_FILE.py
 |  |- docker-entrypoint.sh
 |  |- mac.Dockerfile
 |  |- requirements.txt
@@ -140,6 +152,52 @@ $ docker exec -it pytorch-mac python tests/test.py
 # tensor([[0.0489, 0.5269, 0.9060, 0.7177, 0.6396],
 #         [0.5667, 0.9376, 0.8768, 0.8271, 0.8067],
 #         [0.4823, 0.9321, 0.9934, 0.9015, 0.3173]])
+```
+
+## **Example**
+
+### **Text Sentiment with NGRAMS**
+
+Ref. https://pytorch.org/tutorials/beginner/text_sentiment_ngrams_tutorial.html
+
+From the PyTorch's tutorial, I created `./ml/text-classification` directory to learn/try the tutorial. I split it out to 2-parts, train and test(predict) script. 
+
+For train model :
+
+```bash
+$ docker exec -it pytorch-mac python ml/text-classification/tc_train.py
+ag_news_csv.tar.gz: 11.8MB [00:01, 5.95MB/s]
+120000lines [00:08, 14785.21lines/s]
+120000lines [00:14, 8357.50lines/s]
+7600lines [00:00, 8653.12lines/s]
+Epoch: 1  | time in 0 minutes, 19 seconds
+	Loss: 0.0259(train)	|	Acc: 85.0%(train)
+	Loss: 0.0001(valid)	|	Acc: 88.9%(valid)
+Epoch: 2  | time in 0 minutes, 21 seconds
+	Loss: 0.0118(train)	|	Acc: 93.7%(train)
+	Loss: 0.0001(valid)	|	Acc: 90.7%(valid)
+Epoch: 3  | time in 0 minutes, 20 seconds
+	Loss: 0.0068(train)	|	Acc: 96.4%(train)
+	Loss: 0.0001(valid)	|	Acc: 90.9%(valid)
+Epoch: 4  | time in 0 minutes, 19 seconds
+	Loss: 0.0038(train)	|	Acc: 98.1%(train)
+	Loss: 0.0001(valid)	|	Acc: 90.8%(valid)
+Epoch: 5  | time in 0 minutes, 20 seconds
+	Loss: 0.0022(train)	|	Acc: 99.1%(train)
+	Loss: 0.0001(valid)	|	Acc: 90.7%(valid)
+Checking the results of test dataset...
+	Loss: 0.0003(test)	|	Acc: 89.2%(test)
+Saved model to -> ./ml/text-classification/tc-model.pt
+```
+
+test prediction :
+
+```bash
+$ docker exec -it pytorch-mac python ml/text-classification/tc_test.py
+120000lines [00:08, 13920.01lines/s]
+120000lines [00:15, 7926.40lines/s]
+7600lines [00:01, 7348.76lines/s]
+This is a Sports news
 ```
 
 ## **License**
