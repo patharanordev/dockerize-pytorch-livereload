@@ -158,6 +158,8 @@ $ docker exec -it pytorch-mac python tests/test.py
 
 ### **Text Sentiment with NGRAMS**
 
+> NGRAMS or N-gram means a sequence of N words. example, “Medium blog” is a 2-gram (a bigram), “A Medium blog post” is a 4-gram, and “Write on Medium” is a 3-gram (trigram).
+
 Ref. https://pytorch.org/tutorials/beginner/text_sentiment_ngrams_tutorial.html
 
 From the PyTorch's tutorial, I created `./ml/text-classification` directory to learn/try the tutorial. I split it out to 2-parts, train and test(predict) script. 
